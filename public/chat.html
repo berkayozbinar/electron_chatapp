@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>Chat</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="solKisim kaydirmaCubugu">
+      <div class="solUstKisim">
+        <button onclick="window.location.href = 'http://localhost:3000';" class="ayril"><svg
+            xmlns="http://www.w3.org/2000/svg" class="geriButonu" width="28" height="32" fill="currentColor"
+            class="bi bi-arrow-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+          </svg></button>
+        <p id="odaIsmi" class="text-light bg-dark odaIsmiBuyuklugu">Oda ismi</p>
+      </div>
+      <ul id="kullanicilar" class="lead" style="list-style-type:circle">
+      </ul>
+    </div>
+    <div id="mesajlar1" class="kaydirmaCubugu">
+      <span style="padding-left: 5px;">Bir sohbet başlat.</span>
+      <ul id="mesajlar2">
+      </ul>
+      <p id="geriBildirim"></p>
+    </div>
+    <form id="form" action="">
+      <input id="veri" autocomplete="off" placeholder="Mesajınızı giriniz." /><button class="text-light lead"><svg
+          xmlns="http://www.w3.org/2000/svg" width="64" height="32" fill="currentColor" class="bi bi-arrow-return-left"
+          viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+            d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z" />
+        </svg></button>
+    </form>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.10.3/qs.min.js"></script>
+  <script>
+    var mesajlar = document.getElementById('mesajlar2');
+    var form = document.getElementById('form');
+    var veri = document.getElementById('veri');
+    var geriBildirim = document.getElementById('geriBildirim');
+    var odaIsmi = document.getElementById('odaIsmi');
+    var kullaniciListesi = document.getElementById('kullanicilar');
+
+    // kullanıcı adını ve oda ismini main.html'den alma
+    const { kullaniciAdi, oda } = Qs.parse(location.search, {
+      ignoreQueryPrefix: true
+    });
+    console.log(kullaniciAdi, oda);
+
+    // socket-sunucu iletişimini kurma
+    var socket = io('http://localhost:3000');
+
+    // odaya katılma 
+    socket.emit('joinRoom', { kullaniciAdi, oda })
+
+    // oda isminin ve odada bulunan kullanıcıların socket.io ile alınması
+    socket.on('roomUsers', ({ oda, kullanicilar }) => {
+      odaIsminiYaz(oda);
+      kullanicilariYaz(kullanicilar);
+    })
+
+    // servere socket.io ile bilgi gönderme
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (veri.value) {
+        var tarih = new Date();
+        socket.emit('chat message', ': </strong>' + veri.value + '<span id="tarih">' + tarih.getHours() + ':' + tarih.getMinutes() + '</span>');
+        var item = document.createElement('li');
+        item.innerHTML = '<strong style="color: green;">' + kullaniciAdi + ': </strong>' + veri.value + '<span id="tarih">' + tarih.getHours() + ':' + tarih.getMinutes() + '</span>';
+        mesajlar.appendChild(item);
+        veri.value = '';
+      }
+    });
+
+    // serverden socket.io ile gelen bilgiyi html'e yazma
+    socket.on('chat message', function (msg) {
+      geriBildirim.innerHTML = '';
+      var item = document.createElement('li');
+      item.innerHTML = msg;
+      mesajlar.appendChild(item);
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+
+    // yazıyor... durumu
+    veri.addEventListener('keypress', () => {
+      socket.emit('typing', ' ')
+    })
+    socket.on('typing', data => {
+      geriBildirim.innerHTML = '<p>' + data + ' yazıyor...</p>'
+      if (data.value == '') {
+        geriBildirim.innerHTML = '';
+      }
+    })
+
+    // yazıyor... durumu için fix
+    veri.addEventListener('keyup', () => {
+      geriBildirim.innerHTML = '';
+    })
+
+    // oda ismini DOM'a ekleme
+    function odaIsminiYaz(room) {
+      odaIsmi.innerText = room;
+    }
+
+    // kullanıcıları DOM'a ekleme
+    function kullanicilariYaz(kullanicilar) {
+      kullaniciListesi.innerHTML = `${kullanicilar.map(kullanici => `<li>${kullanici.kullaniciAdi}</li>`).join('')}`;
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,139 @@
+.buyukAlan {
+    background-color: rgba(84, 84, 84, 0.5);
+    margin-top: 11.5%;
+    margin-left: 27%;
+    margin-right: 27%;
+    border-radius: 70px;
+}
+
+.disAnimasyon {
+    border: 7px solid rgb(0, 0, 0, 0.8);
+    animation: border 10.5s 1;
+    animation-iteration-count: infinite;
+}
+
+.animasyonAlani {
+    padding-top: 10px;
+    text-align: center;
+}
+
+.metin {
+    font-size: 40px;
+    animation: text 2.5s 1;
+    letter-spacing: 1px;
+    font-family: cursive;
+}
+
+.baslik {
+    color: rgb(227, 105, 105);
+    font-size: 50px;
+    padding-top: 5px;
+    text-align: center;
+    animation: text2 3s;
+    font-family: cursive;
+}
+
+.alan1 {
+    padding-top: 20px;
+    text-align: center;
+}
+
+.alan2 {
+    padding-top: 3px;
+    padding-bottom: 40px;
+    text-align: center;
+}
+
+.alan3 {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: -10px;
+}
+
+.etiketResim {
+    padding-bottom: 5px;
+}
+
+#kullaniciAdi {
+    border-top-width: 0px;
+    border-bottom-width: 1.5px;
+    border-bottom-style: ridge;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    width: 220px;
+    padding-left: 10px;
+    flex-grow: 1;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+#odalar {
+    height: 30px;
+    width: 250px;
+    border-top-width: 0px;
+    border-bottom-width: 1.5px;
+    border-bottom-style: ridge;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    flex-grow: 1;
+    border-radius: 5px;
+    outline: none;
+}
+
+.buton {
+    border: 0;
+    border-radius: 5px;
+    font-size: 20px;
+    padding-bottom: 5px;
+}
+
+@keyframes border {
+    0% {
+        border-color: rgba(255, 0, 0, 0.5);
+    }
+
+    16.6% {
+        border-color: rgba(255, 247, 0, 0.5);
+    }
+
+    33.2% {
+        border-color: rgba(17, 255, 0, 0.5);
+    }
+
+    50% {
+        border-color: rgba(0, 255, 238, 0.5);
+    }
+
+    66.6% {
+        border-color: rgba(6, 0, 128, 0.5);
+    }
+
+    83.2% {
+        border-color: rgba(247, 0, 255, 0.5);
+    }
+
+    100% {
+        border-color: rgba(255, 0, 0, 0.5);
+    }
+}
+
+@keyframes text {
+    50% {
+        letter-spacing: 5px;
+    }
+}
+
+@keyframes text2 {
+    0% {
+        visibility: hidden;
+    }
+
+    40% {
+        visibility: hidden;
+    }
+
+    70% {
+        visibility: hidden;
+        letter-spacing: 10px;
+    }
+}

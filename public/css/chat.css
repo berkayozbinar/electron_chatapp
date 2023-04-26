@@ -1,0 +1,147 @@
+.container {
+    position: fixed;
+    display: flex;
+    left: -15px;
+}
+
+.solKisim {
+    background: rgba(65, 105, 225, 0.5);
+    width: 225px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    position: fixed;
+    padding-bottom: 50px;
+}
+
+#odaIsmi {
+    text-align: center;
+    height: 45px;
+    top: -32px;
+    padding-top: 2.5px;
+    padding-left: 57px;
+    position: relative;
+}
+
+.odaIsmiBuyuklugu {
+    font-size: 24px;
+}
+
+.ayril {
+    background-color: rgb(220, 220, 220);
+    position: relative;
+    top: 5.2px;
+    left: 12px;
+    width: 50px;
+    height: 32px;
+    border-radius: 8px;
+    outline: none;
+    z-index: 1;
+}
+
+.ayril:hover {
+    background-color: rgb(160, 160, 160);
+}
+
+.geriButonu {
+    top: -2.5px;
+    left: -0.2px;
+    position: relative;
+}
+
+#kullanicilar {
+    font-weight: 480;
+    display: flex;
+    flex-direction: column;
+    padding-left: 30px;
+    margin-top: -40px;
+    position: relative;
+}
+
+#mesajlar1 {
+    background-color: lightgray;
+    padding-bottom: 30px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    left: 225px;
+    right: 0px;
+    overflow-y: scroll;
+    position: fixed;
+}
+
+#mesajlar2>li {
+    background: #bdbdbd;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#mesajlar2>li:nth-child(odd) {
+    background: #e2e2e2;
+}
+
+#mesajlar2 {
+    list-style-type: none;
+    padding: 0;
+    word-break: break-word;
+}
+
+#form {
+    background: rgba(65, 105, 225, 0.5);
+    position: fixed;
+    display: flex;
+    height: 50px;
+    bottom: 0vh;
+    width: 100vw;
+}
+
+#form>button {
+    background-color: rgb(50, 47, 62);
+    border-radius: 5px;
+    outline: none;
+}
+
+#form>button:hover {
+    background-color: rgb(32, 30, 40);
+}
+
+#form>button:active {
+    transform: translateY(1px);
+}
+
+#veri {
+    background-color: white;
+    border: none;
+    padding: 0 1rem;
+    flex-grow: 1;
+    border-radius: 10px;
+    margin: 0.28rem;
+}
+
+#veri:focus {
+    outline: none;
+}
+
+#tarih {
+    color: gray;
+    float: right;
+    font-size: small;
+    padding-right: 5px;
+}
+
+.kaydirmaCubugu::-webkit-scrollbar {
+    width: 12px;
+    background-color: rgb(189, 199, 230);
+}
+
+.kaydirmaCubugu::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-image: -webkit-gradient(linear,
+            left bottom,
+            left top,
+            color-stop(0.30, rgb(110, 149, 227)),
+            color-stop(0.60, rgb(57, 105, 162)),
+            color-stop(0.90, rgb(33, 53, 112)));
+}
